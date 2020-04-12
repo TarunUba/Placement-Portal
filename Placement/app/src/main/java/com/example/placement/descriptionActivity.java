@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -102,7 +103,6 @@ public class descriptionActivity extends Activity {
             typeID = getIntent().getStringExtra("Job_ID");
             type.setText("JOB @");
             offtype = "JOBS";
-
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
             ref.child("Jobs").child(compID).child(typeID).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -173,6 +173,17 @@ public class descriptionActivity extends Activity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
+                        /*try {
+                            GMailSender sender = new GMailSender("Harshaljj1000@gmail.com", "Harshal@123");
+                            sender.sendMail("This is Subject",
+                                    "This is Body",
+                                    "tarunuba@gmail.com",
+                                    "tarunuba@gmail.com");
+                        } catch (Exception e) {
+                            Log.e("SendMail", e.getMessage(), e);
+                        }*/
+                        JavaMailAPI javaMailAPI = new JavaMailAPI(com.example.placement.descriptionActivity.this,"tarunuba@gmail.com","New applicant","Their is a fish on sky");
+                        javaMailAPI.execute();
                         DatabaseReference ds = FirebaseDatabase.getInstance().getReference("Applications").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
                         ds.child(typeID).setValue(application).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -195,6 +206,7 @@ public class descriptionActivity extends Activity {
             Toast.makeText(descriptionActivity.this, "Sorry, You are Ineligible to Apply", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public void back(View view) {
         if(typeOpp.equals("1")){

@@ -1,12 +1,17 @@
 package com.example.placement;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,6 +34,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel =
+                    new NotificationChannel("MyNotification","MyNotification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"MyNotification")
+                .setContentTitle("Notify")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentText("bhaaaaaago");
+
+        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+        manager.notify(999,builder.build());
+
     }
 
     @Override
