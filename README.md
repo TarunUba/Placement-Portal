@@ -1,5 +1,4 @@
 # Placement-Portal
-# Placement-Portal
 > A Mobile Application which in coordination with Placement Cell can help students and companies to reach each other.
 
 ![Opening Page](https://github.com/Harshal-13/Placement-Portal/blob/master/Placement/app/appImages/start_screen.jpg)
